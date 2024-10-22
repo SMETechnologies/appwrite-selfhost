@@ -860,14 +860,14 @@ services:
     volumes:
       - appwrite-redis:/data:rw
 
-  # clamav:
-  #   image: appwrite/clamav:1.2.0
-  #   container_name: appwrite-clamav
-  #   restart: unless-stopped
-  #   networks:
-  #     - appwrite
-  #   volumes:
-  #     - appwrite-uploads:/storage/uploads
+  clamav:
+    image: appwrite/clamav:1.2.0
+    container_name: appwrite-clamav
+    restart: unless-stopped
+    networks:
+      - appwrite
+    volumes:
+      - appwrite-uploads:/storage/uploads
 
 networks:
   gateway:
@@ -882,6 +882,11 @@ volumes:
   appwrite-redis:
   appwrite-cache:
   appwrite-uploads:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/store/appwrite/appwrite-uploads
   appwrite-certificates:
   appwrite-functions:
   appwrite-builds:
